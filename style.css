@@ -1,0 +1,135 @@
+/* --- Base Styles & Font Import --- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* --- CSS Variables (Themes) --- */
+:root {
+    /* Light Theme */
+    --primary-light: #4ADE80; --secondary-light: #60A5FA; --water-color-light: #3B82F6;
+    --text-light: #1F2937; --text-muted-light: #6B7280; --bg-light: #F3F4F6;
+    --card-bg-light: #FFFFFF; --card-border-light: rgba(0, 0, 0, 0.05);
+    --glass-bg-light: rgba(255, 255, 255, 0.65); --glass-border-light: rgba(255, 255, 255, 0.3);
+    --input-bg-light: #FFFFFF; --input-border-light: #D1D5DB;
+    --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.08); --progress-bg-light: #E5E7EB;
+    --primary-light-alpha-low: rgba(74, 222, 128, 0.3); --primary-light-alpha-med: rgba(74, 222, 128, 0.4);
+    --secondary-light-alpha-med: rgba(96, 165, 250, 0.4);
+
+    /* Dark Theme */
+    --primary-dark: #10B981; --secondary-dark: #3B82F6; --water-color-dark: #60A5FA;
+    --text-dark: #F3F4F6; --text-muted-dark: #9CA3AF; --bg-dark: #111827;
+    --card-bg-dark: #1F2937; --card-border-dark: rgba(255, 255, 255, 0.08);
+    --glass-bg-dark: rgba(31, 41, 55, 0.65); --glass-border-dark: rgba(255, 255, 255, 0.1);
+    --input-bg-dark: #374151; --input-border-dark: #4B5563;
+    --shadow-dark: 0 6px 20px rgba(0, 0, 0, 0.2); --progress-bg-dark: #4B5563;
+    --primary-dark-alpha-low: rgba(16, 185, 129, 0.4); --primary-dark-alpha-med: rgba(16, 185, 129, 0.5);
+    --secondary-dark-alpha-med: rgba(59, 130, 246, 0.5);
+
+    /* Common */
+    --radius: 12px; --base-padding: 1rem; --large-padding: 1.5rem;
+    --transition: all 0.3s ease-in-out; --font-family: 'Poppins', sans-serif;
+}
+
+/* Apply Theme Variables */
+body {
+    font-family: var(--font-family); background-color: var(--bg-color); color: var(--text-color);
+    line-height: 1.6; transition: background-color var(--transition), color var(--transition);
+    min-height: 100vh; padding: 0.5rem; font-size: 15px;
+}
+
+/* Initialize variables */
+body {
+    --primary-color: var(--primary-light); --secondary-color: var(--secondary-light); --water-color: var(--water-color-light);
+    --text-color: var(--text-light); --text-muted-color: var(--text-muted-light); --bg-color: var(--bg-light);
+    --card-bg-color: var(--card-bg-light); --card-border-color: var(--card-border-light); --glass-bg-color: var(--glass-bg-light);
+    --glass-border-color: var(--glass-border-light); --input-bg-color: var(--input-bg-light); --input-border-color: var(--input-border-light);
+    --shadow: var(--shadow-light); --progress-bg-color: var(--progress-bg-light); --primary-color-alpha-low: var(--primary-light-alpha-low);
+    --primary-color-alpha-med: var(--primary-light-alpha-med); --secondary-color-alpha-med: var(--secondary-light-alpha-med);
+}
+body.dark {
+    --primary-color: var(--primary-dark); --secondary-color: var(--secondary-dark); --water-color: var(--water-color-dark);
+    --text-color: var(--text-dark); --text-muted-color: var(--text-muted-dark); --bg-color: var(--bg-dark);
+    --card-bg-color: var(--card-bg-dark); --card-border-color: var(--card-border-dark); --glass-bg-color: var(--glass-bg-dark);
+    --glass-border-color: var(--glass-border-dark); --input-bg-color: var(--input-bg-dark); --input-border-color: var(--input-border-dark);
+    --shadow: var(--shadow-dark); --progress-bg-color: var(--progress-bg-dark); --primary-color-alpha-low: var(--primary-dark-alpha-low);
+    --primary-color-alpha-med: var(--primary-dark-alpha-med); --secondary-color-alpha-med: var(--secondary-dark-alpha-med);
+}
+
+/* --- Layout --- */
+.app-container { max-width: 1000px; margin: 1rem auto; padding: var(--base-padding); background: var(--card-bg-color); border-radius: var(--radius); box-shadow: var(--shadow); border: 1px solid var(--card-border-color); transition: background-color var(--transition), border-color var(--transition), box-shadow var(--transition); }
+.app-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--card-border-color); transition: border-color var(--transition); }
+.app-title { font-size: 1.5rem; font-weight: 600; color: var(--primary-color); transition: color var(--transition); }
+.theme-toggle-button { background: none; border: 1px solid var(--input-border-color); color: var(--text-muted-color); padding: 0.4rem 0.6rem; border-radius: 8px; cursor: pointer; font-size: 0.85rem; display: flex; align-items: center; gap: 0.4rem; transition: var(--transition); }
+.theme-toggle-button .icon { font-size: 1.2rem; line-height: 1; }
+.theme-toggle-button .theme-button-text { display: none; }
+.theme-toggle-button:hover { border-color: var(--primary-color); color: var(--primary-color); }
+.main-content { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+
+/* --- Card Styles --- */
+.card { background-color: var(--card-bg-color); border-radius: var(--radius); padding: var(--base-padding); box-shadow: var(--shadow); border: 1px solid var(--card-border-color); transition: var(--transition); height: fit-content; }
+.glass-card { background-color: var(--glass-bg-color); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid var(--glass-border-color); }
+.card-title { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.8rem; color: var(--text-color); transition: color var(--transition); }
+
+/* --- Component Styles --- */
+
+/* Daily Calorie Summary */
+.daily-summary { text-align: center; }
+.progress-circle-container{position:relative;width:120px;height:120px;margin:0.5rem auto 1rem auto}.progress-circle-svg{width:100%;height:100%;transform:rotate(-90deg)}.progress-bg,.progress-fg{fill:none;stroke-width:10}.progress-bg{stroke:var(--progress-bg-color);transition:stroke var(--transition)}.progress-fg{stroke:var(--primary-color);stroke-linecap:round;transition:stroke-dashoffset 1s ease-in-out,stroke var(--transition)}.progress-text{position:absolute;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center}.progress-value{font-size:1.7rem;font-weight:600;color:var(--primary-color);line-height:1.2;transition:color var(--transition)}.progress-label{font-size:.75rem;color:var(--text-muted-color);transition:color var(--transition)}.goal-text{font-size:.85rem;color:var(--text-muted-color);transition:color var(--transition)}#goal-display{font-weight:600;color:var(--text-color);transition:color var(--transition)}
+
+/* Daily Water Summary */
+.daily-water-summary{text-align:center}.water-summary-content{display:flex;flex-direction:column;align-items:center;gap:.5rem;margin-top:.5rem}.water-icon{width:40px;height:40px;stroke:var(--water-color);opacity:.8;transition:stroke var(--transition)}.water-total-text{font-size:1.2rem;font-weight:600;color:var(--water-color);transition:color var(--transition)}#water-total-display{font-weight:700}
+
+/* Add Forms */
+.add-food-form .form-group, .add-water-form .form-group { margin-bottom: 0.8rem; }
+.add-food-form label, .add-water-form label { font-size: 0.8rem; margin-bottom: 0.25rem; display: block; color: var(--text-muted-color); transition: color var(--transition); }
+.add-food-form input, .add-food-form select, .add-water-form input { padding: 0.65rem 0.8rem; font-size: 0.9rem; width: 100%; border-radius: 8px; border: 1px solid var(--input-border-color); background-color: var(--input-bg-color); color: var(--text-color); transition: var(--transition); }
+.add-food-form input:focus, .add-food-form select:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 2px var(--primary-color-alpha-low); }
+.add-water-form input:focus { outline: none; border-color: var(--secondary-color); box-shadow: 0 0 0 2px var(--secondary-light-alpha-med); }
+body.dark .add-water-form input:focus { box-shadow: 0 0 0 2px var(--secondary-dark-alpha-med); }
+.add-food-form .form-row { display: flex; flex-direction: column; gap: 0.8rem; }
+.add-water-button { margin-top: 0; }
+
+/* Buttons */
+.button{padding:.7rem 1.2rem;font-size:.9rem;display:inline-flex;align-items:center;justify-content:center;gap:.5rem;border:none;border-radius:8px;font-weight:600;cursor:pointer;transition:var(--transition);text-align:center;width:100%;margin-top:.5rem}.button .icon{width:1em;height:1em}.button-primary{background-color:var(--primary-color);color:#fff}.button-primary:hover{opacity:.85}.button-primary:focus{outline:none;box-shadow:0 0 0 3px var(--primary-color-alpha-med)}.button-secondary{background-color:transparent;color:var(--secondary-color);border:1px solid var(--secondary-color)}.button-secondary:hover{background-color:var(--secondary-color);color:#fff;opacity:1}.button-secondary:focus{outline:none;box-shadow:0 0 0 3px var(--secondary-color-alpha-med)}
+
+/* Entries Lists */
+.food-entries, .water-entries, .history { min-height: 180px; display: flex; flex-direction: column; }
+.food-list, .water-list, .history-content { list-style: none; margin-top: 0.5rem; flex-grow: 1; overflow-y: auto; max-height: 300px; padding-right: 6px; }
+.food-list li, .water-list li, .history-item { display: flex; justify-content: space-between; align-items: center; padding: 0.7rem 0; border-bottom: 1px solid var(--card-border-color); transition: border-color var(--transition), opacity 0.3s ease, transform 0.3s ease; }
+.food-list li:last-child, .water-list li:last-child, .history-item:last-child { border-bottom: none; }
+.food-list li, .water-list li { animation: itemFadeIn 0.4s ease forwards; }
+.food-list-item.removing, .water-list-item.removing { animation: itemFadeOut 0.3s ease forwards !important; }
+.food-info{flex-grow:1;margin-right:.5rem;overflow:hidden}.food-info .food-name{font-weight:500;font-size:.9rem;color:var(--text-color);transition:color var(--transition);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.food-info .food-meal{font-size:.75rem;color:var(--text-muted-color);transition:color var(--transition)}.food-actions{display:flex;align-items:center;gap:.5rem;flex-shrink:0}.food-calories{font-weight:600;font-size:.9rem;color:var(--primary-color);transition:color var(--transition);white-space:nowrap}
+.water-info{font-size:.9rem;color:var(--water-color);font-weight:500;flex-grow:1;margin-right:.5rem;transition:color var(--transition)}.water-actions{display:flex;align-items:center;gap:.5rem;flex-shrink:0}
+.delete-button{background:0 0;border:none;color:var(--text-muted-color);cursor:pointer;padding:.2rem;line-height:0;border-radius:4px;transition:color .2s ease,background-color .2s ease}.delete-button:hover{color:#ef4444;background-color:rgba(239,68,68,.1)}.delete-button .icon{width:.9rem;height:.9rem;display:block}
+
+/* Placeholders */
+.list-placeholder{font-size:.85rem;min-height:120px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:var(--text-muted-color);height:100%;padding:1rem;border:none!important;transition:color var(--transition)}.placeholder-icon{width:2.5rem;height:2.5rem;margin-bottom:.6rem;opacity:.6;stroke:var(--text-muted-color);transition:stroke var(--transition)}.list-placeholder.hidden{display:none}
+
+/* History */
+.history-item{font-size:.9rem}.history-date{margin-right:.8rem;color:var(--text-muted-color);flex-shrink:0}.history-total{font-weight:600;color:var(--primary-color);white-space:nowrap}
+
+/* Data Tools Card */
+.data-tools{gap:1rem}.chart-container{height:200px;margin-bottom:.8rem;position:relative;width:100%}#stats-chart{display:block;max-width:100%;height:100%!important;width:100%!important}#chart-placeholder{position:absolute;top:0;left:0;width:100%;height:100%;background-color:var(--card-bg-color);margin:0;border-radius:8px;z-index:1;transition:background-color var(--transition)}#chart-placeholder.hidden{display:none}#stats-chart.hidden{display:none} /* Corrected ID */
+.export-buttons{display:flex;flex-direction:column;gap:.75rem}.export-button-text{display:inline}
+
+/* Animations */
+@keyframes itemFadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}@keyframes itemFadeOut{from{opacity:1;transform:translateX(0)}to{opacity:0;transform:translateX(-20px)}}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:0 0}::-webkit-scrollbar-thumb{background-color:var(--text-muted-color);border-radius:10px;border:1px solid transparent;background-clip:content-box;transition:background-color var(--transition)}::-webkit-scrollbar-thumb:hover{background-color:var(--text-color)}
+
+/* Media Queries */
+@media (min-width: 576px){body{font-size:16px}.app-container{margin:1.5rem auto;padding:var(--large-padding)}.app-title{font-size:1.75rem}.card{padding:var(--large-padding)}.theme-toggle-button .theme-button-text{display:inline}.add-food-form .form-row{flex-direction:row}.export-buttons{flex-direction:row}.export-buttons .button{flex:1}.export-button-text{display:inline}.food-list,.water-list,.history-content{max-height:350px}}
+@media (min-width: 768px){.app-container{margin:2rem auto}.main-content{grid-template-columns:repeat(2, 1fr);gap:2rem}.content-section{display:flex;flex-direction:column;gap:1.5rem}.chart-container{height:250px}
+/* Card ordering for desktop */
+.content-section:first-child > .daily-summary { order: 1; }
+.content-section:first-child > .daily-water-summary { order: 2; }
+.content-section:first-child > .add-food-card { order: 3; }
+.content-section:first-child > .add-water-card { order: 4; }
+.content-section:last-child > .food-entries { order: 1; }
+.content-section:last-child > .water-entries { order: 2; }
+.content-section:last-child > .history { order: 3; } /* Calorie History */
+.content-section:last-child > .data-tools { order: 4; } /* Chart & Export */
+}
+@media (min-width: 992px){.content-section{gap:2rem}.food-list,.water-list,.history-content{max-height:400px}}

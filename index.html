@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CalorieGlass</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- External Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.1/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body> <!-- Theme class added by JS -->
+    <div class="app-container">
+        <header class="app-header">
+            <h1 class="app-title">CalorieGlass</h1>
+            <button id="theme-toggle" class="theme-toggle-button" aria-label="Toggle theme">
+                <span class="icon">🌓</span>
+                <span class="theme-button-text">Switch Theme</span>
+            </button>
+        </header>
+
+        <main class="main-content">
+            <!-- Left Column / Top Section -->
+            <section class="content-section">
+                <!-- Daily Calorie Summary Card -->
+                <div class="card glass-card daily-summary">
+                    <h2 class="card-title">Daily Calorie Summary</h2>
+                    <div class="progress-circle-container" id="progress-container">
+                        <svg class="progress-circle-svg" viewBox="0 0 120 120">
+                            <circle class="progress-bg" cx="60" cy="60" r="54" />
+                            <circle id="progress-fg" class="progress-fg" cx="60" cy="60" r="54" />
+                        </svg>
+                        <div id="progress-text" class="progress-text">
+                            <span id="progress-value" class="progress-value">0</span>
+                            <span class="progress-label">calories today</span>
+                        </div>
+                    </div>
+                    <p class="goal-text">
+                        Daily Goal: <span id="goal-display">2000</span> kcal
+                    </p>
+                </div>
+
+                <!-- Daily Water Summary Card -->
+                <div class="card glass-card daily-water-summary">
+                    <h2 class="card-title">Daily Water Intake</h2>
+                    <div class="water-summary-content">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="water-icon">
+                           <path stroke-linecap="round" stroke-linejoin="round" d="M15.182 15.182a4.5 4.5 0 0 1-6.364 0M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0ZM9.75 9.75c0-1.31-.816-2.493-2.004-2.908v-.521a3 3 0 1 1 6 0v.521C12.816 7.257 12 8.44 12 9.75s.816 2.493 2.004 2.908v.521a3 3 0 1 1-6 0v-.521C9.816 12.243 9.75 11.06 9.75 9.75Z" />
+                        </svg>
+                        <p class="water-total-text">
+                            Total: <span id="water-total-display">0</span> ml
+                        </p>
+                    </div>
+                    <!-- Optional: Add water goal display here -->
+                </div>
+
+
+                <!-- Add Food Entry Card -->
+                <div class="card add-food-card">
+                    <h2 class="card-title">Add Food Entry</h2>
+                    <form id="add-food-form" class="add-food-form">
+                        <div class="form-group">
+                            <label for="food-name">Food Name</label>
+                            <input type="text" id="food-name" placeholder="e.g. Apple" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="food-calories">Calories (kcal)</label>
+                                <input type="number" id="food-calories" placeholder="e.g. 95" min="1" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="food-meal">Meal</label>
+                                <select id="food-meal">
+                                    <option value="Breakfast">Breakfast</option>
+                                    <option value="Lunch">Lunch</option>
+                                    <option value="Dinner">Dinner</option>
+                                    <option value="Snacks">Snacks</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="button button-primary add-food-button">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="icon"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" /></svg>
+                            Add Food
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Add Water Intake Card -->
+                <div class="card add-water-card">
+                    <h2 class="card-title">Add Water Intake</h2>
+                    <form id="add-water-form" class="add-water-form">
+                        <div class="form-group">
+                            <label for="water-amount">Amount (ml)</label>
+                            <input type="number" id="water-amount" placeholder="e.g. 250" min="1" required>
+                        </div>
+                        <button type="submit" class="button button-secondary add-water-button">
+                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="icon"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" /></svg>
+                             Add Water
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Right Column / Bottom Section -->
+            <section class="content-section">
+                 <!-- Today's Food Entries Card -->
+                 <div class="card glass-card food-entries">
+                    <h2 class="card-title">Today's Food Entries</h2>
+                    <ul id="food-list" class="food-list">
+                        <li id="food-list-placeholder" class="list-placeholder">
+                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="placeholder-icon"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V12A2.25 2.25 0 0 1 4.5 9.75h15A2.25 2.25 0 0 1 21.75 12v.75m-8.69-6.44-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z" /></svg>
+                            <span>No food entries yet.</span>
+                        </li>
+                        <!-- Food items added by JS -->
+                    </ul>
+                </div>
+
+                <!-- Today's Water Entries Card -->
+                <div class="card glass-card water-entries">
+                    <h2 class="card-title">Today's Water Intake</h2>
+                    <ul id="water-list" class="water-list">
+                        <li id="water-list-placeholder" class="list-placeholder">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="placeholder-icon">
+                               <path stroke-linecap="round" stroke-linejoin="round" d="M15.182 15.182a4.5 4.5 0 0 1-6.364 0M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0ZM9.75 9.75c0-1.31-.816-2.493-2.004-2.908v-.521a3 3 0 1 1 6 0v.521C12.816 7.257 12 8.44 12 9.75s.816 2.493 2.004 2.908v.521a3 3 0 1 1-6 0v-.521C9.816 12.243 9.75 11.06 9.75 9.75Z" />
+                            </svg>
+                            <span>No water entries yet.</span>
+                        </li>
+                        <!-- Water items added by JS -->
+                    </ul>
+                </div>
+
+
+                <!-- Calorie History Card (Excluding Today) -->
+                <div class="card glass-card history">
+                     <h2 class="card-title">Calorie History</h2>
+                     <div id="history-content" class="history-content">
+                         <p id="history-placeholder" class="list-placeholder">
+                             No calorie history.
+                         </p>
+                         <!-- History items added by JS -->
+                     </div>
+                </div>
+
+                <!-- Data Tools Card (Chart & Export) -->
+                <div class="card glass-card data-tools">
+                    <h2 class="card-title">Daily Stats & Export</h2> <!-- Combined Title -->
+                    <!-- Chart Area -->
+                    <div class="chart-container">
+                         <canvas id="stats-chart"></canvas> <!-- Renamed canvas ID -->
+                         <p id="chart-placeholder" class="list-placeholder hidden">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="placeholder-icon"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5M9 11.25v1.5m3-1.5v1.5m3-1.5v1.5M12 16.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 0a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /></svg>
+                            Not enough data.
+                         </p>
+                    </div>
+                    <!-- Export Buttons -->
+                    <div class="export-buttons">
+                        <button id="export-excel" class="button button-secondary">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="icon"><path d="M10.75 2.75a.75.75 0 00-1.5 0v8.614L6.295 8.235a.75.75 0 10-1.09 1.03l4.25 4.5a.75.75 0 001.09 0l4.25-4.5a.75.75 0 00-1.09-1.03l-2.955 3.129V2.75z" /><path d="M3.5 12.75a.75.75 0 00-1.5 0v2.5A2.75 2.75 0 004.75 18h10.5A2.75 2.75 0 0018 15.25v-2.5a.75.75 0 00-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5z" /></svg>
+                            <span class="export-button-text">Excel</span>
+                        </button>
+                        <button id="export-pdf" class="button button-secondary">
+                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="icon"><path d="M10.75 2.75a.75.75 0 00-1.5 0v8.614L6.295 8.235a.75.75 0 10-1.09 1.03l4.25 4.5a.75.75 0 001.09 0l4.25-4.5a.75.75 0 00-1.09-1.03l-2.955 3.129V2.75z" /><path d="M3.5 12.75a.75.75 0 00-1.5 0v2.5A2.75 2.75 0 004.75 18h10.5A2.75 2.75 0 0018 15.25v-2.5a.75.75 0 00-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5z" /></svg>
+                            <span class="export-button-text">PDF</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Your Application Script -->
+    <script src="script.js" defer></script>
+
+    <!-- Tawk.to Script is REMOVED from here -->
+
+</body>
+</html>
